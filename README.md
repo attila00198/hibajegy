@@ -6,8 +6,6 @@ Tisztában vagyok vele, hogy vannak a problémára kész megoldások azonban sze
 
 Az "alkalmazás" célja hogy egy egyszerű hibabejelentő rendszerként működjön. Ezen keresztül a felhasználók értesíthetik az adminisztrátorokat a felmerülő problémáikról, és értesítést kaphatnak ha a problémájuk megoldásra került-e.
 
-############
-
 #error ticket
 
 This project was created primarily for learning purposes, and secondly to facilitate the work of a friend of mine.
