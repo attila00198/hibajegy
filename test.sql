@@ -1,0 +1,1 @@
+SELECT count(*) FROM tickets WHERE user_id = 1;

@@ -1,0 +1,17 @@
+html, body {
+    box-sizing: border-box;
+    font-size: 1rem;
+    font-family: monospace;
+    background-color: rgb(43, 43, 43);
+    color: rgb(134, 223, 0);
+}
+
+.form-switcher {
+    width: 100%;
+    margin: 5px;
+}
+
+.copyright {
+    width: max-content;
+    padding: 10px;
+}
