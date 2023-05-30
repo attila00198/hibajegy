@@ -3,14 +3,30 @@
 if (isset($_SESSION["user"])) {
     $user = $_SESSION["user"];
 }
+if (isset($_SESSION["tickets"])) {
+    $tickets = $_SESSION["tickets"];
+}
 ?>
+
 
 <div class="row justify-content-center align-items-center g-2">
     <div class="col-sm-12 col-md-6">
-        <ul>
-            <li>összes hibajegy megjelenítése táblázatban</li>
-            <li>sorrendezés állapot, és/vagy dátum szerint</li>
-            <li>külön szin a lezárt és aktív hibajegyeknek.</li>
-        </ul>
+        <h1>Üdv <?php echo $user["name"] ?></h1>
+        <div class="table-responsive">
+            <table class="table table-dark table-striped">
+
+                <tbody>
+                    <thead>
+                        <th>#</th>
+                        <th>Tárgy</th>
+                        <th>Létrehozva</th>
+                        <th>Modosítva</th>
+                        <th>Státusz</th>
+                    </thead>
+
+                    
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

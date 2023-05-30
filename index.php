@@ -27,7 +27,7 @@ session_start();
     </header>
 
     <?php if (isset($_SESSION["user"])) : ?>
-        <?php if (($_SESSION["user"]["u_isAdmin"])) : ?>
+        <?php if (($_SESSION["user"]["isAdmin"])) : ?>
 
         <?php endif; ?>
         <nav class="nav justify-content-start">

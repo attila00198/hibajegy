@@ -39,15 +39,15 @@ class UserController
         }
 
         // Adatbázisba történő beszúrás
-        $query = "INSERT INTO users (u_name, u_fullname, u_email, u_passwd) VALUES (:u_name, :u_fullname, :u_email, :u_passwd)";
+        $query = "INSERT INTO users (name, fullname, email, passwd) VALUES (:name, :fullname, :email, :passwd)";
         $stmt = $this->db->prepare($query);
         if ($stmt) {
             $stmt->execute(
                 [
-                    ":u_name" => $username,
-                    ":u_fullname" => $fullname,
-                    ":u_email" => $email,
-                    ":u_passwd" => $hashedPassword,
+                    ":name" => $username,
+                    ":fullname" => $fullname,
+                    ":email" => $email,
+                    ":passwd" => $hashedPassword,
                 ]
             );
 
@@ -73,7 +73,7 @@ class UserController
     public function loginUser($username, $password)
     {
 
-        $query = "SELECT * FROM users WHERE u_name = ?";
+        $query = "SELECT * FROM users WHERE name = ?";
         $stmt = $this->db->prepare($query);
         if($stmt) {
             $stmt->execute([$username]);
@@ -87,7 +87,7 @@ class UserController
             }
 
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            if(password_verify($password, $user["u_passwd"])) {
+            if(password_verify($password, $user["passwd"])) {
                 $_SESSION["msg"] = [
                     "category" => "danger",
                     "message" => "Hibás Jelszó"
@@ -96,6 +96,12 @@ class UserController
             }
             
             $_SESSION["user"] = $user;
+            if($_SESSION["user"]["isAdmin"] == false) {
+                $ticketController = new TicketController($this->db);
+                $_SESSION["user"]["activeTickets"] = $ticketController->getActiveTickets($_SESSION["user"]["id"]);
+                $_SESSION["user"]["insctiveTickets"]= $ticketController->getInactiveTickets($_SESSION["user"]["id"]);
+                $_SESSION["tickets"] = $ticketController->getTicketsByUserID($_SESSION["user"]["id"]);
+            }
             
         } else {
             $_SESSION["msg"] = [
@@ -127,7 +133,7 @@ class UserController
     public function updateUser($userId, $username, $email, $password)
     {
         // Felhasználó frissítése az adatbázisban az azonosító alapján
-        $query = "UPDATE users SET u_name = ?, u_fullname, u_email = ?, u_passwd = ?, u_isAdmin WHERE u_id = ?";
+        $query = "UPDATE users SET name = ?, fullname, email = ?, passwd = ?, u_isAdmin WHERE u_id = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("sssi", $username, $email, $password, $userId);
         $stmt->execute();
@@ -158,7 +164,7 @@ class UserController
 
     private function usernameExists($username)
     {
-        $query = "SELECT * FROM users WHERE u_name=?";
+        $query = "SELECT * FROM users WHERE name=?";
         $stmt = $this->db->prepare($query);
         $stmt->execute([$username]);
         if ($stmt->rowCount() > 0) {
@@ -170,7 +176,7 @@ class UserController
 
     private function emailExists($email)
     {
-        $query = "SELECT * FROM users WHERE u_email=?";
+        $query = "SELECT * FROM users WHERE email=?";
         $stmt = $this->db->prepare($query);
         $stmt->execute([$email]);
         if ($stmt->rowCount() > 0) {

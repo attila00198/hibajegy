@@ -14,7 +14,7 @@ switch ($uri[1]) {
         if (!isset($_SESSION["user"])) {
             require "views/index.php";
         } else {
-            if ($_SESSION["user"]["u_isAdmin"]) {
+            if ($_SESSION["user"]["isAdmin"]) {
                 require "views/adminViews/dashbord.php";
             } else {
                 require "views/home.php";
