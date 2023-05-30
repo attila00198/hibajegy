@@ -33,6 +33,14 @@ if (isset($_SESSION["tickets"])) {
     }
 </style>
 
+<?php if (isset($_SESSION["msg"])) : ?>
+    <div class="row justify-content-center align-items-center g-2">
+        <div class="alert alert-<?= $_SESSION["msg"]["category"] ?> col-sm-12 col-md-4 pb-4">
+            <span><?= $_SESSION["msg"]["message"] ?></span>
+        </div>
+    </div>
+<?php endif; ?>
+
 <dialog data-model>
     <div class="row justify-content-center align-items-center g-2">
         <h4>Jelszóváltás</h4>
@@ -42,18 +50,18 @@ if (isset($_SESSION["tickets"])) {
     </div>
     <div class="row justify-content-center align-items-center g-2">
         <div class="col">
-            <form class="form mt-4" id="login-form" action="updatePassword" method="post">
+            <form class="form mt-4" id="passwd-change-form" action="profile" method="post">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control bg-dark text-white" name="ePassword" id="ePassword" placeholder="Jelenlegi Jelszó" required>
-                    <label for="ePassword">Jelenlegi Jelszó</label>
+                    <input type="text" class="form-control bg-dark text-white" name="currentPasswd" id="currentPasswd" placeholder="Jelenlegi Jelszó" required>
+                    <label for="currentPasswd">Jelenlegi Jelszó</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control bg-dark text-white" name="nPassword" id="nPassword" placeholder="Új jelszó" required>
-                    <label for="nPassword">Új jelszó</label>
+                    <input type="text" class="form-control bg-dark text-white" name="newPasswd" id="newPasswd" placeholder="Új jelszó" required>
+                    <label for="newPasswd">Új jelszó</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control bg-dark text-white" name="rPassword" id="rPassword" placeholder="Megerősítés" required>
-                    <label for="rPassword">Megerősítés</label>
+                    <input type="text" class="form-control bg-dark text-white" name="repeatPasswd" id="repeatPasswd" placeholder="Megerősítés" required>
+                    <label for="repeatPasswd">Megerősítés</label>
                 </div>
                 <button type="submit" class="btn btn-success">Mentés</button>
             </form>
@@ -63,7 +71,7 @@ if (isset($_SESSION["tickets"])) {
 
 <div class="row justify-content-center align-items-center g-2">
     <div class="col-sm-12 col-md-6">
-        <h1>Üdv <?php echo $user["name"] ?></h1>
+        <h1>Üdv <?php echo $user["fullname"] ?></h1>
         <div class="table-responsive">
             <table class="table table-dark table-striped">
 

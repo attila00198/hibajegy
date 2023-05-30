@@ -32,7 +32,6 @@ session_start();
         <?php endif; ?>
         <nav class="nav justify-content-start">
             <a class="nav-link" href="/">Kezdőlap</a>
-            <a class="nav-link" href="/newticket">Új hibajegy</a>
             <a class="nav-link" href="/tickets">Hibajegyeim</a>
             <a class="nav-link" href="/profile">Profile</a>
             <a class="nav-link" href="/logout">Kilépés</a>

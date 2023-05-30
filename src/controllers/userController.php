@@ -75,10 +75,10 @@ class UserController
 
         $query = "SELECT * FROM users WHERE name = ?";
         $stmt = $this->db->prepare($query);
-        if($stmt) {
+        if ($stmt) {
             $stmt->execute([$username]);
 
-            if(!$this->usernameExists($username)) {
+            if (!$this->usernameExists($username)) {
                 $_SESSION["msg"] = [
                     "category" => "danger",
                     "message" => "Nincs regisztrált felhasználó ezen a néven."
@@ -87,22 +87,22 @@ class UserController
             }
 
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            if(password_verify($password, $user["passwd"])) {
+            if (!password_verify($password, $user["passwd"])) {
                 $_SESSION["msg"] = [
                     "category" => "danger",
                     "message" => "Hibás Jelszó"
                 ];
                 return false;
             }
-            
+
             $_SESSION["user"] = $user;
-            if($_SESSION["user"]["isAdmin"] == false) {
+            if ($_SESSION["user"]["isAdmin"] == false) {
                 $ticketController = new TicketController($this->db);
                 $_SESSION["user"]["activeTickets"] = $ticketController->getActiveTickets($_SESSION["user"]["id"]);
-                $_SESSION["user"]["insctiveTickets"]= $ticketController->getInactiveTickets($_SESSION["user"]["id"]);
+                $_SESSION["user"]["insctiveTickets"] = $ticketController->getInactiveTickets($_SESSION["user"]["id"]);
                 $_SESSION["tickets"] = $ticketController->getTicketsByUserID($_SESSION["user"]["id"]);
+                unset($_SESSION["msg"]);
             }
-            
         } else {
             $_SESSION["msg"] = [
                 "category" => "danger",
@@ -146,6 +146,39 @@ class UserController
         return false; // Sikertelen frissítés
     }
 
+    public function changePasswd($password, $id)
+    {
+        if (strlen($password) < 8) {
+            $_SESSION["msg"] = [
+                "category" => "danger",
+                "message" => "Túl rövid jelszó! Minimum hossz 8 karakter."
+            ];
+            return false;
+        }
+
+        $password = password_hash($password, PASSWORD_DEFAULT);
+
+        // Felhasználó frissítése az adatbázisban az azonosító alapján
+        $query = "UPDATE users SET passwd = ? WHERE id = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$password, $id]);
+
+        // Sikeres frissítés ellenőrzése
+        if ($stmt->rowCount() === 1) {
+            $_SESSION["msg"] = [
+                "category" => "info",
+                "message" => "Jelszó sikeresen megáltoztatva"
+            ];
+            return true; // Sikeres frissítés
+        }
+
+        $_SESSION["msg"] = [
+            "category" => "danger",
+            "message" => "Hiba történt a jelszóváltás során."
+        ];
+        return false; // Sikertelen frissítés
+    }
+
     public function deleteUser($userId)
     {
         // Felhasználó törlése az adatbázisból az azonosító alapján
@@ -176,9 +209,11 @@ class UserController
 
     private function emailExists($email)
     {
-        $query = "SELECT * FROM users WHERE email=?";
+        $query = "SELECT * FROM users WHERE :email=email";
         $stmt = $this->db->prepare($query);
-        $stmt->execute([$email]);
+        $stmt->execute([
+            ":email" => $email
+        ]);
         if ($stmt->rowCount() > 0) {
             return true;
         }

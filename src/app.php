@@ -23,19 +23,21 @@ switch ($uri[1]) {
         break;
 
     case 'login':
+        unset($_SESSION["msg"]);
         if ($method == "POST") {
 
-            $uName = $_POST["lusername"];
-            $uPasswd = $_POST["lpassword"];
+            $name = $_POST["lusername"];
+            $passwd = $_POST["lpassword"];
 
             $usrCtrl = new UserController($dbc);
-            $usrCtrl->loginUser($uName, $uPasswd);
+            $usrCtrl->loginUser($name, $passwd);
 
             header("location: /");
         }
         break;
 
     case "register":
+        unset($_SESSION["msg"]);
         if ($method == "POST") {
             $uName = $_POST["rusername"];
             $fullName = $_POST["rfullname"];
@@ -55,6 +57,7 @@ switch ($uri[1]) {
         }
 
     case "tickets":
+        unset($_SESSION["msg"]);
         if (!isset($_SESSION["user"])) {
             header("location: /");
         }
@@ -63,14 +66,35 @@ switch ($uri[1]) {
         break;
 
     case "profile":
+        unset($_SESSION["msg"]);
         if (!isset($_SESSION["user"])) {
             header("location: /");
         }
+
+        if($method == "POST") {
+            $currentPasswd = $_POST["currentPasswd"];
+            $newPasswd = $_POST["newPasswd"];
+            $repeatPasswd = $_POST["repeatPasswd"];
+
+            if ($newPasswd != $repeatPasswd) {
+                $_SESSION["msg"] = [
+                    "category" => "danger",
+                    "message" => "A megadott jelszavak nem egyeznek"
+                ];
+            } else {
+                $password = $newPasswd;
+            }
+
+            $userController = new UserController($dbc);
+            $userController->changePasswd($password, $_SESSION["user"]["id"]);
+        }
+
         $user = $_SESSION["user"];
         include "views/profile.php";
         break;
 
     case "logout":
+        unset($_SESSION["msg"]);
         unset($_SESSION["user"]);
         header("location: /");
         break;
