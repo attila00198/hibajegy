@@ -1,17 +1,21 @@
 # hibajegy
 
-Ez a projekt első sorban tanulási céllal készült, másod sorban egy barátom munkájának mekönnyítése érdekében.
+Üdv
 
-Tisztában vagyok vele, hogy vannak a problémára kész megoldások azonban szerettem volna egy sajátta előállni.
+Ez a project Tanulási céllal jött létre
 
-Az "alkalmazás" célja hogy egy egyszerű hibabejelentő rendszerként működjön. Ezen keresztül a felhasználók értesíthetik az adminisztrátorokat a felmerülő problémáikról, és értesítést kaphatnak ha a problémájuk megoldásra került-e.
+Ez egy egyszerű hibajegy kezelő rendszer.
 
-##############
+## Tervezett alap funkciók:
 
-# error ticket
+- A felhasználók létrehozhatnak hibajegyeket melyben leirják hogy milyen problémába ütköztek.
+- Az adminisztrátokrok. módosíthatják ezen hibajegyek státuszát, a felhasználók pedig értesítést kapnak a jegy állapotának megváltozásáról.
+- Az adminok értesítést kapnak ha új hibajegy jött létre.
 
-This project was created primarily for learning purposes, and secondly to facilitate the work of a friend of mine.
+Jelenleg ezek a megvalósitandó céljaim. Később szeretném újabb funkciókal bőviteni a rendszert de jelenleg ezek megvalósítására fókuszálok.
 
-I am aware that there are ready-made solutions to the problem, but I wanted to come up with one of my own.
+## Ha esetlek valaki klónoza:
 
-The purpose of the "application" is to function as a simple error reporting system. Through this, users can notify the administrators about their problems and receive a notification if their problem has been solved.
+Először is tudom, hogy a kód egy elég nagy katyvasz, azonban nem rendelkezem elég tapasztalattal ilyen jellegű projektek menedzselésével kapcsolatban.
+
+Másod sorban pedig, ha valaki szeretné felvenni velem a kapcsolatot az megteheti email-ben az attila00198@gmail.com címen. Az email tárgya legyen Hibajegy.
