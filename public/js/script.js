@@ -1,6 +1,18 @@
 var lfContainer = document.querySelector("#login-form-container")
 var rfContainer = document.querySelector("#register-form-container")
 
+var changePasswddialog = document.querySelector("[data-model]")
+var openPwdChangerBtn = document.querySelector("[data-open-model]")
+var colosepwdChangerBtn = document.querySelector("[data-close-model]")
+
+openPwdChangerBtn.addEventListener('click', () => {
+    changePasswddialog.showModal()
+})
+
+colosepwdChangerBtn.addEventListener('click', () => {
+    changePasswddialog.close()
+})
+
 // Switch to registration form
 function showRegister() {
     let lbtn = document.querySelector("#show-lform")
