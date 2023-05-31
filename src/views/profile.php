@@ -105,3 +105,17 @@ if (isset($_SESSION["tickets"])) {
         </div>
     </div>
 </div>
+
+<script>
+    var modal = document.querySelector("[data-model]")
+    var openModalBtn = document.querySelector("[data-open-model]")
+    var claseModalBtn = document.querySelector("[data-close-model]")
+
+    openModalBtn.addEventListener('click', () => {
+        modal.showModal()
+    })
+
+    claseModalBtn.addEventListener('click', () => {
+        modal.close()
+    })
+</script>

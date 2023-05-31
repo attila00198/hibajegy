@@ -10,7 +10,6 @@ if (isset($_SESSION["tickets"])) {
 
 <style>
     dialog {
-        width: 50%;
         position: relative;
         z-index: 10;
         margin-top: 80px;
@@ -46,7 +45,7 @@ if (isset($_SESSION["tickets"])) {
     </div>
 <?php endif; ?>
 
-<dialog data-model>
+<dialog class="col-sm-12 col-md-6" data-model>
     <div class="row justify-content-center align-items-center g-2 mb-4">
         <h4>Hibajegy létrehozása</h4>
         <div class="col">
@@ -92,3 +91,17 @@ if (isset($_SESSION["tickets"])) {
         </div>
     </div>
 </div>
+
+<script>
+    var modal = document.querySelector("[data-model]")
+    var openModalBtn = document.querySelector("[data-open-model]")
+    var claseModalBtn = document.querySelector("[data-close-model]")
+
+    openModalBtn.addEventListener('click', () => {
+        modal.showModal()
+    })
+
+    claseModalBtn.addEventListener('click', () => {
+        modal.close()
+    })
+</script>
